@@ -75,11 +75,11 @@ public class HardwareInfoPreferenceController extends BasePreferenceController {
     // -------------------------------------------------------------------------
 
     private static final String EVO_IMAGE_URL =
-            "https://raw.githubusercontent.com/Evolution-X/www_gitres/main/devices/images/%s.webp";
+            "https://raw.githubusercontent.com/Evolution-X-OnePlus-15/www_gitres/main/devices/images/%s.webp";
     private static final String LINEAGE_IMAGE_URL =
             "https://raw.githubusercontent.com/LineageOS/lineage_wiki/main/images/devices/%s.png";
     private static final String EVO_OTA_URL =
-            "https://raw.githubusercontent.com/Evolution-X/OTA/%s/builds/%s.json";
+            "https://raw.githubusercontent.com/Evolution-X-OnePlus-15/OTA/cnb/builds/%s.json";
 
     // Branch lookup order for OTA JSON resolution. CNB (Android 17) is tried
     // first; bka (Android 16) is the legacy fallback for devices that don't
