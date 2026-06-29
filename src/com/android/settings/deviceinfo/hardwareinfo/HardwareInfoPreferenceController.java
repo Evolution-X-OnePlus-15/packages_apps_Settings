@@ -71,11 +71,11 @@ public class HardwareInfoPreferenceController extends BasePreferenceController {
     // -------------------------------------------------------------------------
 
     private static final String EVO_IMAGE_URL =
-            "https://raw.githubusercontent.com/Evolution-X/www_gitres/main/devices/images/%s.webp";
+            "https://raw.githubusercontent.com/Evolution-X-OnePlus-15/www_gitres/main/devices/images/%s.webp";
     private static final String LINEAGE_IMAGE_URL =
             "https://raw.githubusercontent.com/LineageOS/lineage_wiki/main/images/devices/%s.png";
     private static final String EVO_OTA_URL =
-            "https://raw.githubusercontent.com/Evolution-X/OTA/bka/builds/%s.json";
+            "https://raw.githubusercontent.com/Evolution-X-OnePlus-15/OTA/bka/builds/%s.json";
 
     // -------------------------------------------------------------------------
     // Disk-cache SharedPreferences name
