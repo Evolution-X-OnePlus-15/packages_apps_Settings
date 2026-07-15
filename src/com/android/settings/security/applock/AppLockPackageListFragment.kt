@@ -27,7 +27,6 @@ import android.view.View
 
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
-import androidx.preference.forEach
 
 import com.android.internal.logging.nano.MetricsProto
 import com.android.internal.util.evolution.Utils
@@ -68,7 +67,7 @@ class AppLockPackageListFragment : DashboardFragment() {
                 pm.getInstalledPackages(
                     PackageInfoFlags.of(PackageManager.MATCH_ALL.toLong())
                 ).filter {
-                    !it.applicationInfo.isSystemApp() ||
+                    it.applicationInfo?.isSystemApp() != true ||
                         launchablePackages.contains(it.packageName) ||
                         whiteListedPackages.contains(it.packageName)
                 }.sortedWith { first, second ->
@@ -89,9 +88,12 @@ class AppLockPackageListFragment : DashboardFragment() {
         super.onResume()
         lifecycleScope.launch {
             val selectedPackages = getSelectedPackages()
-            preferenceScreen?.forEach {
-                if (it is PrimarySwitchPreference) {
-                    it.isChecked = selectedPackages.contains(it.key)
++            preferenceScreen?.let { screen ->
++                for (i in 0 until screen.preferenceCount) {
++                    val pref = screen.getPreference(i)
++                    if (pref is PrimarySwitchPreference) {
++                        pref.isChecked = selectedPackages.contains(pref.key)
++                    }
                 }
             }
         }
@@ -104,7 +106,7 @@ class AppLockPackageListFragment : DashboardFragment() {
     }
 
     private fun getLabel(packageInfo: PackageInfo) =
-        packageInfo.applicationInfo.loadLabel(pm).toString()
+        packageInfo.applicationInfo?.loadLabel(pm)?.toString() ?: packageInfo.packageName
 
     private fun getLaunchablePackages(): List<String> {
         val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
@@ -118,16 +120,12 @@ class AppLockPackageListFragment : DashboardFragment() {
         return PrimarySwitchPreference(requireContext()).apply {
             key = packageInfo.packageName
             title = label
-            icon = packageInfo.applicationInfo.loadIcon(pm)
+            icon = packageInfo.applicationInfo?.loadIcon(pm)
             setIconSize(ICON_SIZE_SMALL)
             isChecked = isProtected
             setOnPreferenceChangeListener { _, newValue ->
                 lifecycleScope.launch(Dispatchers.IO) {
-                    if (newValue as Boolean) {
-                        appLockManager.addPackage(packageInfo.packageName)
-                    } else {
-                        appLockManager.removePackage(packageInfo.packageName)
-                    }
+                    appLockManager.setShouldProtectApp(packageInfo.packageName, newValue as Boolean)
                 }
                 return@setOnPreferenceChangeListener true
             }

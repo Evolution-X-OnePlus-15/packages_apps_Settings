@@ -61,11 +61,7 @@ class AppLockPackageProtectionPC(
         if (isProtected == checked) return false
         isProtected = checked
         coroutineScope.launch(Dispatchers.Default) {
-            if (isProtected) {
-                appLockManager.addPackage(packageName)
-            } else {
-                appLockManager.removePackage(packageName)
-            }
+            appLockManager.setShouldProtectApp(packageName, isProtected)
         }
         return true
     }
