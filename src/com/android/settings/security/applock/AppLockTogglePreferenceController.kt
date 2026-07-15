@@ -25,7 +25,6 @@ import androidx.preference.PreferenceScreen
 import com.android.settings.R
 import com.android.settings.core.TogglePreferenceController
 import com.android.settingslib.widget.MainSwitchPreference
-import com.android.settingslib.widget.OnMainSwitchChangeListener
 
 abstract class AppLockTogglePreferenceController(
     context: Context,

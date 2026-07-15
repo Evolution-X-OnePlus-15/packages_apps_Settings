@@ -88,12 +88,12 @@ class AppLockPackageListFragment : DashboardFragment() {
         super.onResume()
         lifecycleScope.launch {
             val selectedPackages = getSelectedPackages()
-+            preferenceScreen?.let { screen ->
-+                for (i in 0 until screen.preferenceCount) {
-+                    val pref = screen.getPreference(i)
-+                    if (pref is PrimarySwitchPreference) {
-+                        pref.isChecked = selectedPackages.contains(pref.key)
-+                    }
+            preferenceScreen?.let { screen ->
+                for (i in 0 until screen.preferenceCount) {
+                    val pref = screen.getPreference(i)
+                    if (pref is PrimarySwitchPreference) {
+                        pref.isChecked = selectedPackages.contains(pref.key)
+                    }
                 }
             }
         }
